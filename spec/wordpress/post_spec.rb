@@ -17,11 +17,10 @@ RSpec.describe Wordpress::Post do
   let(:optional_fields) { %w{post_id post_modified_gmt} }
 
   it "handles a post without optional fields" do
-    params = EXAMPLE_NORMAL_POST.reject {|k,_| optional_fields.include? k }
-    post = Wordpress::Post.new(params)
-    expect(post.title).to eq "This is a post"
-    expect(post.content).to eq "This is my #content"
+    post = Wordpress::Post.new(EXAMPLE_MINIMAL_POST)
+    expect(post.title).to eq ""
+    expect(post.content).to eq "This post has content"
     expect(post.type).to eq "post"
-    expect(post.format).to eq "standard"
+    expect(post.format).to eq "status"
   end
 end
