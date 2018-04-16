@@ -51,7 +51,7 @@ class Wordpress
       1,
       @username,
       @password,
-      { content: post.fields }
+      post.fields
     )
     post.with("post_id" => new_id)
   end

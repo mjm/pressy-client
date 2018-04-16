@@ -81,7 +81,7 @@ RSpec.describe Wordpress do
       "post_type" => "post",
       "post_format" => "standard",
     }
-    expect(client).to receive(:call).with("wp.newPost", 1, username, password, { content: post_content }) { 1234 }
+    expect(client).to receive(:call).with("wp.newPost", 1, username, password, post_content) { 1234 }
     
     post = Wordpress::Post.new(post_content)
     post = wordpress.create_post(post)
