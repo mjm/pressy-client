@@ -10,7 +10,7 @@ class Wordpress::Post
   attr_accessor :id, :title, :content, :type, :format
 
   def initialize(params)
-    @id = params.fetch("post_id")
+    @id = params["post_id"]
     @title = params.fetch("post_title")
     @content = params.fetch("post_content")
     @type = params.fetch("post_type")
@@ -18,13 +18,19 @@ class Wordpress::Post
   end
 
   def fields
-    {
-      "post_id" => id,
+    fields = {
       "post_title" => title,
       "post_content" => content,
       "post_type" => type,
       "post_format" => format,
     }
+    fields["post_id"] = id if id
+    fields
+  end
+
+  def with(params)
+    new_params = fields.merge(params)
+    self.class.new(new_params)
   end
 end
 

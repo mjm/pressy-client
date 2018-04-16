@@ -45,6 +45,17 @@ class Wordpress
     FetchPostsCollection.new(self)
   end
 
+  def create_post(post)
+    new_id = @client.call(
+      "wp.newPost",
+      1,
+      @username,
+      @password,
+      { content: post.fields }
+    )
+    post.with("post_id" => new_id)
+  end
+  
   class FetchPostsCollection
     include Enumerable
 

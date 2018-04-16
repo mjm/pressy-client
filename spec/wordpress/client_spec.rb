@@ -73,4 +73,18 @@ RSpec.describe Wordpress do
       end
     end
   end
+
+  it "can create a new standard post" do
+    post_content = {
+      "post_title" => "Post title",
+      "post_content" => "OMG this is the content",
+      "post_type" => "post",
+      "post_format" => "standard",
+    }
+    expect(client).to receive(:call).with("wp.newPost", 1, username, password, { content: post_content }) { 1234 }
+    
+    post = Wordpress::Post.new(post_content)
+    post = wordpress.create_post(post)
+    expect(post.fields).to eq post_content.merge("post_id" => 1234)
+  end
 end
