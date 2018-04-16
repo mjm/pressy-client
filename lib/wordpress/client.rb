@@ -1,6 +1,8 @@
 require 'xmlrpc/client'
 
 class Wordpress
+  attr_reader :client, :username, :password
+
   def initialize(client, username, password)
     @client = client
     @username = username
@@ -28,7 +30,7 @@ class Wordpress
     [params, username, password]
   end
 
-  def posts
+  def recent_posts
     @client.call(
       "wp.getPosts",
       1,
@@ -38,4 +40,39 @@ class Wordpress
       Wordpress::Post::WP_FIELDS
    ).map {|params| Wordpress::Post.new(params) }
   end
+
+  def fetch_posts
+    FetchPostsCollection.new(self)
+  end
+
+  class FetchPostsCollection
+    include Enumerable
+
+    def initialize(wp)
+      @wp = wp
+    end
+
+    def each
+      offset = 0
+      posts = fetch_posts(offset)
+
+      until posts.empty?
+        posts.each {|post| yield Wordpress::Post.new(post) }
+        offset += 20
+        posts = fetch_posts(offset)
+      end
+    end
+
+    def fetch_posts(offset=0)
+      @wp.client.call(
+        "wp.getPosts",
+        1,
+        @wp.username,
+        @wp.password,
+        { post_type: "post", offset: offset, number: 20 },
+        Wordpress::Post::WP_FIELDS
+      )
+    end
+  end
+
 end
