@@ -14,8 +14,6 @@ RSpec.describe Wordpress::Post do
     expect(post.fields).to eq fields
   end
 
-  let(:optional_fields) { %w{post_id post_modified_gmt} }
-
   it "handles a post without optional fields" do
     post = Wordpress::Post.new(EXAMPLE_MINIMAL_POST)
     expect(post.title).to eq ""
