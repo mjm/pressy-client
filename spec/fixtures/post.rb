@@ -5,6 +5,7 @@ EXAMPLE_NORMAL_POST = {
   "post_type" => "post",
   "post_status" => "publish",
   "post_format" => "standard",
+  "post_date_gmt" => XMLRPC::DateTime.new(2018, 4, 16, 12, 30, 5),
   "post_modified_gmt" => XMLRPC::DateTime.new(2018, 4, 15, 22, 30, 5),
 }
 
@@ -15,6 +16,7 @@ EXAMPLE_STATUS_POST = {
   "post_type" => "post",
   "post_status" => "draft",
   "post_format" => "status",
+  "post_date_gmt" => XMLRPC::DateTime.new(2018, 4, 16, 12, 30, 5),
   "post_modified_gmt" => XMLRPC::DateTime.new(2018, 4, 15, 22, 30, 5),
 }
 

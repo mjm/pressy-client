@@ -6,10 +6,11 @@ class Wordpress::Post
     post_type
     post_status
     post_format
+    post_date_gmt
     post_modified_gmt
   }
 
-  attr_accessor :id, :title, :content, :type, :status, :format, :modified_at
+  attr_accessor :id, :title, :content, :type, :status, :format, :published_at, :modified_at
 
   def initialize(params)
     @id = params["post_id"]
@@ -18,6 +19,9 @@ class Wordpress::Post
     @type = params.fetch("post_type", "post")
     @status = params.fetch("post_status", "draft")
     @format = params.fetch("post_format")
+    if params["post_date_gmt"]
+      @published_at = params["post_date_gmt"].to_time
+    end
     if params["post_modified_gmt"]
       @modified_at = params["post_modified_gmt"].to_time
     end
@@ -33,6 +37,7 @@ class Wordpress::Post
     }
     fields["post_id"] = id if id
     fields["post_modified_gmt"] = modified_at if modified_at
+    fields["post_date_gmt"] = published_at if published_at
     fields
   end
 
