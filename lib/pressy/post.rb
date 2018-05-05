@@ -1,4 +1,4 @@
-class Wordpress::Post
+class Pressy::Post
   WP_FIELDS = %w{
     post_id
     post_title

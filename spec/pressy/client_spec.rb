@@ -1,12 +1,16 @@
 require "spec_helper"
 require "fixtures/post"
 
-RSpec.describe Wordpress do
+RSpec.describe Pressy::Client do
   let(:client) { double(:xmlrpc_client) }
   let(:username) { "user" }
   let(:password) { "pass" }
-  let(:wordpress) { Wordpress.new(client, username, password) }
-  let(:fields) { Wordpress::Post::WP_FIELDS }
+  let(:wordpress) { Pressy::Client.new(client, username, password) }
+  let(:fields) { Pressy::Post::WP_FIELDS }
+
+  it "has a version number" do
+    expect(Pressy::Client::VERSION).not_to be nil
+  end
 
   context "connecting" do
     it "can be created with a client, username, and password" do
@@ -21,7 +25,7 @@ RSpec.describe Wordpress do
         use_ssl: false,
         path: "/xmlrpc.php"
       }).and_return(client)
-      Wordpress.connect(params)
+      Pressy::Client.connect(params)
     end
 
     it "can be created with a minimal hash of parameters" do
@@ -32,7 +36,7 @@ RSpec.describe Wordpress do
         use_ssl: true,
         path: "/xmlrpc.php",
       }) { client }
-      Wordpress.connect(params)
+      Pressy::Client.connect(params)
     end
   end
 
@@ -59,7 +63,7 @@ RSpec.describe Wordpress do
         expect(client).to receive(:call).with("wp.getPosts", 1, username, password, { post_type: "post", number: 20, offset: 20 }, fields) { [] }
         posts = wordpress.fetch_posts.to_a
         expect(posts.count).to eq 15
-        expect(posts.first).to be_a Wordpress::Post
+        expect(posts.first).to be_a Pressy::Post
       end
     end
 
@@ -80,7 +84,7 @@ RSpec.describe Wordpress do
       "post_content" => "OMG this is the content",
       "post_format" => "standard",
     }
-    post = Wordpress::Post.new(post_content)
+    post = Pressy::Post.new(post_content)
     post_content = post.fields
     expect(client).to receive(:call).with("wp.newPost", 1, username, password, post_content) { 1234 }
     

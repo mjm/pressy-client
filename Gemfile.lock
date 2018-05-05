@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wordpress (0.1.0)
+    pressy-client (0.1.0)
       xmlrpc
 
 GEM
@@ -22,17 +22,17 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    xmlrpc (0.2.1)
+    xmlrpc (0.3.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bundler (~> 1.16)
+  pressy-client!
   rake (~> 10.0)
   rspec (~> 3.0)
   rspec-mocks (~> 3.0)
-  wordpress!
 
 BUNDLED WITH
    1.16.1

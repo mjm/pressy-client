@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'fixtures/post'
 
-RSpec.describe Wordpress::Post do
+RSpec.describe Pressy::Post do
   it "roundtrips from wordpress fields" do
-    post = Wordpress::Post.new(EXAMPLE_NORMAL_POST)
+    post = Pressy::Post.new(EXAMPLE_NORMAL_POST)
     expect(post.id).to eq 123
     expect(post.title).to eq "This is a post"
     expect(post.content).to eq "This is my #content"
@@ -19,7 +19,7 @@ RSpec.describe Wordpress::Post do
   end
 
   it "handles a post without optional fields" do
-    post = Wordpress::Post.new(EXAMPLE_MINIMAL_POST)
+    post = Pressy::Post.new(EXAMPLE_MINIMAL_POST)
     expect(post.title).to eq ""
     expect(post.content).to eq "This post has content"
     expect(post.type).to eq "post"
