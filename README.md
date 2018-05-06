@@ -1,15 +1,17 @@
-# Wordpress
+# pressy-client
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/wordpress`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+`pressy-client` is a simple library for using WordPress's XML-RPC API. It's made to be used by Pressy, a command-line tool for working with your WordPress site using local files on disk.
 
 ## Installation
+
+`pressy-client` is not yet published as a RubyGem. Pressy pulls `pressy-client` in directly from the Git sources at the moment, as it makes development easier.
+
+<!--
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'wordpress'
+gem 'pressy-client'
 ```
 
 And then execute:
@@ -18,7 +20,9 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install wordpress
+    $ gem install pressy-client
+
+-->
 
 ## Usage
 
@@ -32,7 +36,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/wordpress. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mjm/pressy-client. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +44,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Wordpress project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/wordpress/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Pressy project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/mjm/pressy-client/blob/master/CODE_OF_CONDUCT.md).
