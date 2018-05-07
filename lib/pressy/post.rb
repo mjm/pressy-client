@@ -45,6 +45,17 @@ class Pressy::Post
     new_params = fields.merge(params)
     self.class.new(new_params)
   end
+
+  def ==(other)
+    id == other.id &&
+      title == other.title &&
+      content == other.content &&
+      type == other.type &&
+      status == other.status &&
+      format == other.format &&
+      published_at == other.published_at &&
+      modified_at == other.modified_at
+  end
 end
 
 # {

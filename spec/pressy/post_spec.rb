@@ -25,4 +25,23 @@ RSpec.describe Pressy::Post do
     expect(post.type).to eq "post"
     expect(post.format).to eq "status"
   end
+
+  describe "equality" do
+    it "is equal to itself" do
+      post = Pressy::Post.new(EXAMPLE_NORMAL_POST)
+      expect(post).to eq post
+    end
+
+    it "is equal to a post from the same fields" do
+      post = Pressy::Post.new(EXAMPLE_NORMAL_POST)
+      post2 = Pressy::Post.new(EXAMPLE_NORMAL_POST)
+      expect(post).to eq post2
+    end
+
+    it "is not equal to a different post" do
+      post = Pressy::Post.new(EXAMPLE_NORMAL_POST)
+      post2 = post.with("post_title" => "Foo bar")
+      expect(post).not_to eq post2
+    end
+  end
 end
