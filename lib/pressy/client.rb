@@ -57,6 +57,20 @@ module Pressy
       post.with("post_id" => new_id)
     end
 
+    def edit_post(post)
+      fields = post.fields
+      fields.delete("post_id")
+
+      @client.call(
+        "wp.editPost",
+        1,
+        @username,
+        @password,
+        post.id,
+        fields
+      )
+    end
+
     class FetchPostsCollection
       include Enumerable
 

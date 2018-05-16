@@ -91,4 +91,15 @@ RSpec.describe Pressy::Client do
     post = wordpress.create_post(post)
     expect(post.fields).to eq post_content.merge("post_id" => 1234)
   end
+
+  it "can update an existing post" do
+    post = Pressy::Post.new(EXAMPLE_NORMAL_POST).with(
+      "post_content" => "This is my updated content"
+    )
+    post_content = post.fields
+    post_content.delete("post_id")
+    expect(client).to receive(:call).with("wp.editPost", 1, username, password, 123, post_content) { true }
+
+    wordpress.edit_post(post)
+  end
 end
