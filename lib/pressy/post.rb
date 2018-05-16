@@ -13,7 +13,7 @@ class Pressy::Post
   attr_accessor :id, :title, :content, :type, :status, :format, :published_at, :modified_at
 
   def initialize(params)
-    @id = params["post_id"]
+    @id = params["post_id"]&.to_i
     @title = params.fetch("post_title", "")
     @content = params.fetch("post_content")
     @type = params.fetch("post_type", "post")
@@ -35,7 +35,7 @@ class Pressy::Post
       "post_status" => status,
       "post_format" => format,
     }
-    fields["post_id"] = id if id
+    fields["post_id"] = id.to_s if id
     fields["post_modified_gmt"] = modified_at if modified_at
     fields["post_date_gmt"] = published_at if published_at
     fields

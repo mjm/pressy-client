@@ -86,10 +86,10 @@ RSpec.describe Pressy::Client do
     }
     post = Pressy::Post.new(post_content)
     post_content = post.fields
-    expect(client).to receive(:call).with("wp.newPost", 1, username, password, post_content) { 1234 }
+    expect(client).to receive(:call).with("wp.newPost", 1, username, password, post_content) { "1234" }
     
     post = wordpress.create_post(post)
-    expect(post.fields).to eq post_content.merge("post_id" => 1234)
+    expect(post.fields).to eq post_content.merge("post_id" => "1234")
   end
 
   it "can update an existing post" do
