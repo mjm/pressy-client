@@ -11,11 +11,7 @@ RSpec.describe Pressy::Post do
     expect(post.format).to eq "standard"
     expect(post.published_at).to eq Time.gm(2018, 4, 16, 12, 30, 5)
 
-    fields = EXAMPLE_NORMAL_POST.merge(
-      "post_modified_gmt" => Time.gm(2018, 4, 15, 22, 30, 5),
-      "post_date_gmt" => Time.gm(2018, 4, 16, 12, 30, 5)
-    )
-    expect(post.fields).to eq fields
+    expect(post.fields).to eq EXAMPLE_NORMAL_POST
   end
 
   it "handles a post without optional fields" do
