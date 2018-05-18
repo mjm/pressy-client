@@ -46,6 +46,18 @@ module Pressy
       FetchPostsCollection.new(self)
     end
 
+    def fetch_post(id)
+      fields = @client.call(
+        "wp.getPost",
+        1,
+        @username,
+        @password,
+        id.to_i,
+        Post::WP_FIELDS
+      )
+      Post.new(fields)
+    end
+
     def create_post(post)
       new_id = @client.call(
         "wp.newPost",
@@ -54,7 +66,7 @@ module Pressy
         @password,
         post.fields
       )
-      post.with("post_id" => new_id)
+      fetch_post(new_id)
     end
 
     def edit_post(post)
@@ -69,6 +81,7 @@ module Pressy
         post.id,
         fields
       )
+      fetch_post(post.id)
     end
 
     class FetchPostsCollection

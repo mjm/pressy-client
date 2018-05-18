@@ -87,6 +87,9 @@ RSpec.describe Pressy::Client do
     post = Pressy::Post.new(post_content)
     post_content = post.fields
     expect(client).to receive(:call).with("wp.newPost", 1, username, password, post_content) { "1234" }
+
+    with_id = post_content.merge("post_id" => "1234")
+    expect(client).to receive(:call).with("wp.getPost", 1, username, password, 1234, fields) { with_id }
     
     post = wordpress.create_post(post)
     expect(post.fields).to eq post_content.merge("post_id" => "1234")
@@ -100,6 +103,9 @@ RSpec.describe Pressy::Client do
     post_content.delete("post_id")
     expect(client).to receive(:call).with("wp.editPost", 1, username, password, 123, post_content) { true }
 
-    wordpress.edit_post(post)
+    expect(client).to receive(:call).with("wp.getPost", 1, username, password, 123, fields) { EXAMPLE_NORMAL_POST }
+
+    edited_post = wordpress.edit_post(post)
+    expect(edited_post.content).to eq "This is my #content"
   end
 end
