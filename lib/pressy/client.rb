@@ -32,14 +32,8 @@ module Pressy
     end
 
     def recent_posts
-      @client.call(
-        "wp.getPosts",
-        1,
-        @username,
-        @password,
-        { post_type: "post" },
-        Post::WP_FIELDS
-      ).map {|params| Post.new(params) }
+      posts = call "wp.getPosts", { post_type: "post" }, Post::WP_FIELDS
+      posts.map {|params| Post.new(params) }
     end
 
     def fetch_posts
@@ -47,25 +41,12 @@ module Pressy
     end
 
     def fetch_post(id)
-      fields = @client.call(
-        "wp.getPost",
-        1,
-        @username,
-        @password,
-        id.to_i,
-        Post::WP_FIELDS
-      )
+      fields = call "wp.getPost", id.to_i, Post::WP_FIELDS
       Post.new(fields)
     end
 
     def create_post(post)
-      new_id = @client.call(
-        "wp.newPost",
-        1,
-        @username,
-        @password,
-        post.fields
-      )
+      new_id = call "wp.newPost", post.fields
       fetch_post(new_id)
     end
 
@@ -73,15 +54,12 @@ module Pressy
       fields = post.fields
       fields.delete("post_id")
 
-      @client.call(
-        "wp.editPost",
-        1,
-        @username,
-        @password,
-        post.id,
-        fields
-      )
+      call "wp.editPost", post.id, fields
       fetch_post(post.id)
+    end
+
+    def call(method, *args)
+      @client.call(method, 1, @username, @password, *args)
     end
 
     class FetchPostsCollection
@@ -96,21 +74,14 @@ module Pressy
         posts = fetch_posts(offset)
 
         until posts.empty?
-          posts.each {|post| yield ::Pressy::Post.new(post) }
+          posts.each {|post| yield Post.new(post) }
           offset += 20
           posts = fetch_posts(offset)
         end
       end
 
       def fetch_posts(offset=0)
-        @wp.client.call(
-          "wp.getPosts",
-          1,
-          @wp.username,
-          @wp.password,
-          { post_type: "post", offset: offset, number: 20 },
-          ::Pressy::Post::WP_FIELDS
-        )
+        @wp.call "wp.getPosts", { post_type: "post", offset: offset, number: 20 }, Post::WP_FIELDS
       end
     end
   end
