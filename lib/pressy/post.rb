@@ -21,7 +21,7 @@ class Pressy::Post
   # The ID of the post.
   # This maps to the +"post_id"+ field in the WordPress API.
   # @return [Fixnum] The ID of the post, or nil if the post is not yet saved.
-  attribute :id, :post_id, from_attr: -> (id) { id.to_i }, to_attr: -> (id) { id.to_s }
+  attribute :id, :post_id, from_attr: -> (id) { id&.to_i }, to_attr: -> (id) { id&.to_s }
   # The title of the post.
   # This maps to the +"post_title"+ field in the WordPress API.
   # @return [String] The title of the post, or +""+ if the post is untitled.

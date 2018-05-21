@@ -16,6 +16,7 @@ RSpec.describe Pressy::Post do
 
   it "handles a post without optional fields" do
     post = Pressy::Post.new(EXAMPLE_MINIMAL_POST)
+    expect(post.id).to be_nil
     expect(post.title).to eq ""
     expect(post.content).to eq "This post has content"
     expect(post.type).to eq "post"
