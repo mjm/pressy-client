@@ -23,6 +23,11 @@ RSpec.describe Pressy::Post do
     expect(post.format).to eq "status"
   end
 
+  it "handles a post with extra fields" do
+    post = Pressy::Post.new(EXAMPLE_EXTRA_POST)
+    expect(post.fields).not_to have_key("short_url")
+  end
+
   describe "equality" do
     it "is equal to itself" do
       post = Pressy::Post.new(EXAMPLE_NORMAL_POST)

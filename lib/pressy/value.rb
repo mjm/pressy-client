@@ -4,7 +4,7 @@ module Pressy::Value
   end
 
   def initialize(attrs = {})
-    @attributes = attrs
+    @attributes = attrs.select {|k, _| self.class.attribute_names.include? k }
   end
 
   def attributes
@@ -29,6 +29,10 @@ module Pressy::Value
       @defaults[field_name] = value
     end
 
+    def attribute_names
+      @attribute_names ||= Set.new
+    end
+
     # @!macro [attach] attribute
     #   @!attribute [rw] $1
     def attribute(name, field_name, options = {})
@@ -36,6 +40,7 @@ module Pressy::Value
       from_attr = options[:from_attr] || ->(x) { x }
       to_attr = options[:to_attr] || ->(x) { x }
 
+      attribute_names.add(field_name)
       add_default(field_name, options[:default]) if options.has_key?(:default)
 
       define_method(name) do

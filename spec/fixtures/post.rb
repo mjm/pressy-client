@@ -24,3 +24,7 @@ EXAMPLE_MINIMAL_POST = {
   "post_content" => "This post has content",
   "post_format" => "status"
 }
+
+EXAMPLE_EXTRA_POST = EXAMPLE_MINIMAL_POST.merge({
+  "short_url" => "http://example.com/foo"
+})
