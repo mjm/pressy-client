@@ -53,6 +53,7 @@ class Pressy::Post
 
   TIME_OPTIONS = {
     from_attr: -> (time) { time&.to_time },
+    to_attr: -> (time) { Post.wp_timestamp(time) }
   }
 
   # The timestamp when the post was published, or when it is set to be
@@ -70,6 +71,10 @@ class Pressy::Post
   #   Create a {Hash} of the post data for use by the WordPress API.
   #   @return [Hash<String, Object>] A hash of post data.
   alias_method :fields, :attributes
+
+  def self.wp_timestamp(time)
+    XMLRPC::DateTime.new(*time.to_a.take(6).reverse) if time
+  end
 end
 
 # {
