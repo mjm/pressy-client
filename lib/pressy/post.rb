@@ -25,7 +25,7 @@ class Pressy::Post
   # The title of the post.
   # This maps to the +"post_title"+ field in the WordPress API.
   # @return [String] The title of the post, or +""+ if the post is untitled.
-  attribute :title, :post_title, from_attr: -> (title) { title || "" }
+  attribute :title, :post_title, from_attr: -> (title) { title || "" }, default: ""
   # The body of the post.
   # This maps to the +"post_content"+ field in the WordPress API.
   # @return [String] The body of the post.

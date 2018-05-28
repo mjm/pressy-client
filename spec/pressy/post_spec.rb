@@ -21,6 +21,8 @@ RSpec.describe Pressy::Post do
     expect(post.content).to eq "This post has content"
     expect(post.type).to eq "post"
     expect(post.format).to eq "status"
+
+    expect(post.fields["post_title"]).to eq ""
   end
 
   it "handles a post with extra fields" do
